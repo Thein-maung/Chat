@@ -3,43 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🌌 Quantum Entangled Chat</title>
+  <title>🌌 TwinAI Chat</title>
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="/styles.css" />
+  <!-- Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/simple-peer@9.11.1/simplepeer.min.js"></script>
   <script src="https://unpkg.com/@zxing/library@0.20.0/umd/index.min.js"></script>
 </head>
 <body>
-  <h1>🌌 Quantum-Entangled AI Chat</h1>
+  <h1>🌌 TwinAI Entangled Chat</h1>
 
+  <!-- Setup -->
   <div id="setup">
-    <button onclick="createPair()">CREATE ENTANGLED PAIR</button>
-    <button onclick="startScan()">BECOME QUANTUM TWIN</button>
+    <button onclick="createPair()">CREATE TWIN AI</button>
+    <button onclick="startScan()">JOIN TWIN AI</button>
   </div>
 
-  <div id="qr-ui">
-    <p>Scan this QR with your twin's camera</p>
+  <!-- QR Display -->
+  <div id="qr-ui" style="display:none;">
+    <p>Scan with your twin's camera</p>
     <div id="qr-code"></div>
   </div>
 
-  <div id="scan-ui">
-    <h3>Scan Quantum QR</h3>
-    <video id="video" playsinline></video>
+  <!-- Camera Scanner -->
+  <div id="scan-ui" style="display:none;">
+    <h3>Scan Twin QR</h3>
+    <video id="video" playsinline style="width:100%;max-width:300px;background:#111;"></video>
     <button onclick="cancelScan()">Cancel</button>
   </div>
 
-  <div id="chat">
+  <!-- Chat + Voice -->
+  <div id="chat" style="display:none;">
     <div id="messages"></div>
-    <input id="msg-input" placeholder="Type a message..." />
-    <button onclick="sendMsg()">Send</button>
+    <input id="msg" placeholder="Type..." />
+    <button onclick="sendChat()">Send</button>
 
-    <div id="call-controls" style="display:none;">
-      <button id="call-btn" onclick="startCall()">📞 Start Voice Call</button>
-      <button id="hangup-btn" onclick="endCall()" style="display:none;">⏹️ Hang Up</button>
+    <div style="margin:12px 0;">
+      <button id="callBtn" onclick="startCall()">📞 Call Twin</button>
+      <button id="hangupBtn" onclick="endCall()" style="display:none;">⏹️ Hang Up</button>
     </div>
   </div>
 
-  <audio id="remote-audio" autoplay playsinline></audio>
+  <audio id="remoteAudio" autoplay playsinline style="display:none;"></audio>
   <script src="/app.js"></script>
 </body>
 </html>
