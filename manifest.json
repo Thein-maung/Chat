@@ -1,0 +1,13 @@
+{
+  "name": "Quantum Entangled Chat",
+  "short_name": "Entangled Chat",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00ff00",
+  "icons": [{
+    "src": "image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><circle cx='96' cy='96' r='88' fill='%2300ff00'/><text x='96' y='110' text-anchor='middle' font-size='40' fill='%23000'>QC</text></svg>",
+    "sizes": "192x192",
+    "type": "image/svg+xml"
+  }]
+}

@@ -3,114 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🌌 Entangled Chat</title>
-  <link rel="manifest" href="#"/>
-  <style>
-    body { 
-      background: #000; color: #0f0; font-family: monospace; 
-      margin: 0; padding: 16px; max-width: 600px; margin: auto;
-    }
-    button { background: #0f0; color: #000; border: none; padding: 10px 16px; margin: 8px 0; cursor: pointer; }
-    #qr { text-align: center; margin: 20px 0; }
-    #chat { display: none; }
-    .msg { padding: 6px; margin: 4px 0; border-left: 2px solid; }
-    .me { text-align: right; border-left-color: #ff0; }
-    .twin { text-align: left; border-left-color: #0ff; }
-    input { width: 70%; padding: 8px; background: #111; color: #0f0; border: 1px solid #0f0; }
-  </style>
+  <title>🌌 Quantum Entangled Chat</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/simple-peer@9.11.1/simplepeer.min.js"></script>
+  <script src="https://unpkg.com/@zxing/library@0.20.0/umd/index.min.js"></script>
 </head>
 <body>
-  <h1>🌌 Quantum-Entangled Chat</h1>
+  <h1>🌌 Quantum-Entangled AI Chat</h1>
 
   <div id="setup">
     <button onclick="createPair()">CREATE ENTANGLED PAIR</button>
-    <p>Scan the QR with your quantum twin device</p>
-    <div id="qr"></div>
+    <button onclick="startScan()">BECOME QUANTUM TWIN</button>
+  </div>
+
+  <div id="qr-ui">
+    <p>Scan this QR with your twin's camera</p>
+    <div id="qr-code"></div>
+  </div>
+
+  <div id="scan-ui">
+    <h3>Scan Quantum QR</h3>
+    <video id="video" playsinline></video>
+    <button onclick="cancelScan()">Cancel</button>
   </div>
 
   <div id="chat">
     <div id="messages"></div>
-    <input id="input" placeholder="Type a message..." />
-    <button onclick="send()">Send</button>
+    <input id="msg-input" placeholder="Type a message..." />
+    <button onclick="sendMsg()">Send</button>
+
+    <div id="call-controls" style="display:none;">
+      <button id="call-btn" onclick="startCall()">📞 Start Voice Call</button>
+      <button id="hangup-btn" onclick="endCall()" style="display:none;">⏹️ Hang Up</button>
+    </div>
   </div>
 
-  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-  <script>
-    let seed = null;
-    const setup = document.getElementById('setup');
-    const chat = document.getElementById('chat');
-
-    function createPair() {
-      // Generate 128-bit hex seed
-      const arr = new Uint8Array(16);
-      crypto.getRandomValues(arr);
-      seed = Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
-      
-      // Display QR
-      document.getElementById('qr').innerHTML = '';
-      new QRCode(document.getElementById('qr'), seed);
-      
-      // Auto-join after 2s (simulate twin on same device)
-      setTimeout(() => joinPair(seed), 2000);
-    }
-
-    function joinPair(scannedSeed) {
-      seed = scannedSeed;
-      setup.style.display = 'none';
-      chat.style.display = 'block';
-      addMsg('🟢 Quantum twins entangled!', 'system');
-    }
-
-    function addMsg(text, sender) {
-      const el = document.createElement('div');
-      el.className = sender === 'me' ? 'msg me' : 'msg twin';
-      el.innerText = sender === 'me' ? `👉 ${text}` : `👈 ${text}`;
-      document.getElementById('messages').appendChild(el);
-      el.scrollIntoView();
-    }
-
-    async function encrypt(msg) {
-      const enc = new TextEncoder();
-      const key = await crypto.subtle.importKey(
-        'raw', enc.encode(seed), {name: 'AES-GCM'}, false, ['encrypt']
-      );
-      const iv = crypto.getRandomValues(new Uint8Array(12));
-      const ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, key, enc.encode(msg));
-      return { iv, ct };
-    }
-
-    async function decrypt({iv, ct}) {
-      const enc = new TextEncoder();
-      const key = await crypto.subtle.importKey(
-        'raw', enc.encode(seed), {name: 'AES-GCM'}, false, ['decrypt']
-      );
-      const pt = await crypto.subtle.decrypt({name: 'AES-GCM', iv}, key, ct);
-      return new TextDecoder().decode(pt);
-    }
-
-    async function send() {
-      const input = document.getElementById('input');
-      const txt = input.value.trim();
-      if (!txt) return;
-      input.value = '';
-
-      // Encrypt & simulate twin receive
-      const encrypted = await encrypt(txt);
-      addMsg(txt, 'me');
-      
-      // Simulate "instant" twin decryption
-      setTimeout(async () => {
-        const decrypted = await decrypt(encrypted);
-        addMsg(decrypted, 'twin');
-      }, 300);
-    }
-
-    // Make it a PWA (minimal)
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('data:application/javascript,' + 
-        'self.addEventListener("fetch", () => {});'
-      );
-    }
-  </script>
+  <audio id="remote-audio" autoplay playsinline></audio>
+  <script src="/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,24 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #000; color: #0f0; font-family: 'Courier New', monospace;
+  padding: 16px; max-width: 600px; margin: 0 auto;
+}
+h1 { text-align: center; margin: 16px 0; font-size: 1.6em; }
+button {
+  background: #0f0; color: #000; border: none; padding: 10px 16px;
+  margin: 8px 4px; cursor: pointer; border-radius: 4px;
+  font-family: inherit;
+}
+#setup, #qr-ui, #scan-ui, #chat { display: none; }
+#qr-code { text-align: center; margin: 20px 0; }
+#video { width: 100%; max-width: 320px; border: 2px solid #0f0; background: #111; border-radius: 8px; }
+#messages {
+  height: 280px; overflow-y: auto; border: 1px solid #0f0;
+  padding: 10px; margin: 10px 0; background: #001100; border-radius: 4px;
+}
+.msg { padding: 6px; margin: 4px 0; }
+.me { text-align: right; color: #ff0; }
+.twin { text-align: left; color: #0ff; }
+input { width: 65%; padding: 8px; background: #111; color: #0f0; border: 1px solid #0f0; border-radius: 4px; }
+#call-controls { margin: 12px 0; }
+#remote-audio { display: none; }
